@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nosotros dos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#14263B;--muted:#5C6F82;--sea:#D9E6EC;--paper:#F7F9FA;--card:#fff;--line:#C9D7DF;--berry:#D6336C;--berry-soft:#FBE3EC;--radius:10px}
+@media(prefers-color-scheme:dark){:root{--ink:#E8EEF3;--muted:#9DB0C0;--sea:#16293A;--paper:#0F1C29;--card:#172736;--line:#2C4156;--berry:#F0689A;--berry-soft:#3A2030}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.5 Figtree,system-ui,sans-serif}
+h1,h2,h3{font-family:'Bricolage Grotesque',Figtree,sans-serif;line-height:1.15;margin:0}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--berry);outline-offset:2px}
+header{background:var(--sea);border-bottom:1px solid var(--line)}
+.wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+.top{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:12px;padding-top:22px}
+.top h1{font-size:clamp(1.8rem,5vw,2.8rem);font-weight:800;letter-spacing:-.02em}
+.tabs{display:flex;gap:4px}
+.tab{background:none;border:0;border-bottom:3px solid transparent;padding:10px 14px;font-weight:600;color:var(--muted)}
+.tab[aria-selected=true]{color:var(--ink);border-color:var(--berry)}
+main{padding:28px 0 60px}
+.sub{display:flex;gap:8px;margin-bottom:22px}
+.pill{border:1px solid var(--line);background:var(--card);border-radius:99px;padding:6px 16px;font-weight:500}
+.pill[aria-selected=true]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.btn{background:var(--berry);color:#fff;border:0;border-radius:var(--radius);padding:9px 16px;font-weight:600}
+.btn.ghost{background:none;color:var(--ink);border:1px solid var(--line)}
+.btn.small{padding:5px 10px;font-size:.88rem}
+.hidden{display:none!important}
+/* map */
+.mapgrid{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(260px,1fr);gap:28px;align-items:start}
+@media(max-width:800px){.mapgrid{grid-template-columns:1fr}}
+.mapbox{background:var(--sea);border-radius:var(--radius);padding:12px}
+#map{width:100%;height:auto;display:block}
+.prov{fill:var(--card);stroke:var(--muted);stroke-width:1.4;stroke-linejoin:round;cursor:pointer;transition:fill .15s}
+.prov:hover{fill:var(--berry-soft)}
+.prov.on{fill:var(--berry)}
+.prov.on:hover{opacity:.85}
+.count{font-family:'Bricolage Grotesque';font-size:2.4rem;font-weight:800}
+.bar{height:8px;background:var(--line);border-radius:9px;overflow:hidden;margin:8px 0 18px}
+.bar i{display:block;height:100%;background:var(--berry);width:0;transition:width .3s}
+.chips{display:flex;flex-wrap:wrap;gap:6px;max-height:380px;overflow:auto}
+.chip{border:1px solid var(--line);background:var(--card);border-radius:99px;padding:3px 11px;font-size:.88rem}
+.chip.on{background:var(--berry);border-color:var(--berry);color:#fff}
+.soon{border:2px dashed var(--line);border-radius:var(--radius);padding:50px 20px;text-align:center;color:var(--muted)}
+/* rankings */
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-bottom:18px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;text-align:left}
+button.card:hover{border-color:var(--berry)}
+.card h3{font-size:1.15rem;margin-bottom:4px}
+.muted{color:var(--muted);font-size:.92rem}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px;margin-bottom:22px}
+label{display:block;font-weight:600;font-size:.92rem;margin-bottom:4px}
+input[type=text],select,textarea{width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:8px;background:var(--paper)}
+.field{margin-bottom:14px}
+.crit{display:grid;grid-template-columns:110px 1fr 44px;gap:10px;align-items:center;margin-bottom:6px}
+.crit input{accent-color:var(--berry)}
+.crit output{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
+.items{display:grid;gap:14px}
+.item{display:grid;grid-template-columns:120px 1fr auto;gap:16px;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:12px;align-items:center}
+.item img,.ph{width:120px;height:90px;object-fit:cover;border-radius:8px;background:var(--sea)}
+.score{font-family:'Bricolage Grotesque';font-size:2rem;font-weight:800;color:var(--berry);text-align:right;line-height:1}
+.mini{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:.88rem;color:var(--muted);margin-top:4px}
+.mini b{color:var(--ink)}
+@media(max-width:560px){.item{grid-template-columns:90px 1fr}.item img,.ph{width:90px;height:70px}.score{grid-column:1/-1;text-align:left}.crit{grid-template-columns:80px 1fr 40px}}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.tag{background:var(--berry-soft);border-radius:99px;padding:2px 10px;font-size:.88rem}
+.tag button{background:none;border:0;padding:0 0 0 6px}
+footer{border-top:1px solid var(--line);padding:18px 0;color:var(--muted);font-size:.9rem}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <div class="top">
+    <h1>Nosotros dos</h1>
+    <nav class="tabs" role="tablist">
+      <button class="tab" role="tab" data-view="trotamundos">Trotamundos</button>
+      <button class="tab" role="tab" data-view="rankings">Rankings</button>
+    </nav>
+  </div>
+</div></header>
+
+<main class="wrap">
+  <!-- TROTAMUNDOS -->
+  <section id="v-trotamundos">
+    <div class="sub" role="tablist">
+      <button class="pill" role="tab" data-sub="nacional">Nacional</button>
+      <button class="pill" role="tab" data-sub="internacional">Internacional</button>
+    </div>
+    <div id="s-nacional" class="mapgrid">
+      <div class="mapbox"><svg id="map" role="group" aria-label="Mapa de provincias de España"></svg></div>
+      <div>
+        <div class="count"><span id="n">0</span> de 52</div>
+        <div class="muted">provincias visitadas</div>
+        <div class="bar"><i id="bar"></i></div>
+        <p class="muted" style="margin-top:0">Toca una provincia en el mapa o en la lista para marcarla.</p>
+        <div class="chips" id="chips"></div>
+      </div>
+    </div>
+    <div id="s-internacional" class="soon hidden">
+      <h2>Internacional</h2>
+      <p>Aquí irán los países que visitemos. Todavía por decidir cómo.</p>
+    </div>
+  </section>
+
+  <!-- RANKINGS -->
+  <section id="v-rankings" class="hidden">
+    <div id="r-list">
+      <div class="row"><h2>Nuestros rankings</h2><button class="btn" id="new-rank">Crear ranking</button></div>
+      <form id="rank-form" class="panel hidden">
+        <div class="field"><label for="rk-name">Nombre del ranking</label><input type="text" id="rk-name" placeholder="Hoteles, restaurantes, playas…" required></div>
+        <div class="field"><label for="rk-crit">Categorías de puntuación</label>
+          <input type="text" id="rk-crit" placeholder="Escribe una y pulsa Intro (cama, tele, comida…)">
+          <div class="tags" id="rk-tags"></div></div>
+        <button class="btn" type="submit">Guardar ranking</button>
+        <button class="btn ghost" type="button" id="rk-cancel">Cancelar</button>
+      </form>
+      <div class="cards" id="rank-cards"></div>
+    </div>
+
+    <div id="r-detail" class="hidden">
+      <div class="row">
+        <div><button class="btn ghost small" id="back">Volver</button></div>
+        <div><button class="btn ghost small" id="edit-cats">Editar categorías</button> <button class="btn ghost small" id="del-rank">Borrar ranking</button></div>
+      </div>
+      <h2 id="rd-title" style="margin-bottom:16px"></h2>
+      <form id="item-form" class="panel">
+        <h3 id="if-title" style="margin-bottom:14px">Añadir elemento</h3>
+        <div class="field"><label for="it-name">Nombre</label><input type="text" id="it-name" required></div>
+        <div class="field"><label for="it-photo">Foto</label><input type="file" id="it-photo" accept="image/*"><img id="it-prev" class="hidden" alt="Vista previa" style="max-width:160px;margin-top:8px;border-radius:8px"></div>
+        <div id="it-scores"></div>
+        <div class="field"><label for="it-notes">Comentario</label><textarea id="it-notes" rows="2"></textarea></div>
+        <button class="btn" type="submit" id="if-save">Añadir</button>
+        <button class="btn ghost hidden" type="button" id="if-cancel">Cancelar edición</button>
+      </form>
+      <div class="row">
+        <div><label for="sort" style="display:inline;margin-right:8px">Ordenar por</label>
+          <select id="sort" style="width:auto"></select></div>
+        <span class="muted" id="count-items"></span>
+      </div>
+      <div class="items" id="items"></div>
+    </div>
+  </section>
+</main>
+
+<footer><div class="wrap">
+  Los datos se guardan en este navegador.
+  <button class="btn ghost small" id="export">Exportar copia</button>
+  <label class="btn ghost small" style="display:inline-block;margin:0;font-weight:500;cursor:pointer">Importar copia<input type="file" id="import" accept="application/json" class="hidden"></label>
+</div></footer>
+
+<script src="spain-map.js"></script>
+<script>
+const KEY='nosotros-dos-v1';
+let state={visited:{},rankings:[]};
+try{const s=JSON.parse(localStorage.getItem(KEY));if(s&&s.rankings)state=s}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){alert('No hay espacio para guardar. Prueba con fotos más pequeñas o exporta una copia.')}}
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const uid=()=>Math.random().toString(36).slice(2,10);
+const esc=t=>String(t).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+/* navegación */
+let view='trotamundos', sub='nacional', currentRank=null;
+function show(){
+  $$('.tab').forEach(b=>b.setAttribute('aria-selected',b.dataset.view===view));
+  $$('.pill').forEach(b=>b.setAttribute('aria-selected',b.dataset.sub===sub));
+  $('#v-trotamundos').classList.toggle('hidden',view!=='trotamundos');
+  $('#v-rankings').classList.toggle('hidden',view!=='rankings');
+  $('#s-nacional').classList.toggle('hidden',sub!=='nacional');
+  $('#s-internacional').classList.toggle('hidden',sub!=='internacional');
+  $('#r-list').classList.toggle('hidden',!!currentRank);
+  $('#r-detail').classList.toggle('hidden',!currentRank);
+}
+$$('.tab').forEach(b=>b.onclick=()=>{view=b.dataset.view;show()});
+$$('.pill').forEach(b=>b.onclick=()=>{sub=b.dataset.sub;show()});
+
+/* mapa */
+const M=window.SPAIN_MAP, NS='http://www.w3.org/2000/svg', svg=$('#map');
+svg.setAttribute('viewBox',`0 0 ${M.w} ${M.h}`);
+M.provinces.forEach(p=>{
+  const el=document.createElementNS(NS,'path');
+  el.setAttribute('d',p.d);el.setAttribute('class','prov');el.dataset.id=p.id;
+  el.setAttribute('tabindex','0');el.setAttribute('role','button');el.setAttribute('aria-label',p.name);
+  const t=document.createElementNS(NS,'title');t.textContent=p.name;el.appendChild(t);
+  el.onclick=()=>toggle(p.id);
+  el.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();toggle(p.id)}};
+  svg.appendChild(el);
+});
+const fr=document.createElementNS(NS,'rect');
+[['x',0],['y',1],['width',2],['height',3]].forEach(([k,i])=>fr.setAttribute(k,M.frame[i]));
+fr.setAttribute('fill','none');fr.setAttribute('stroke','var(--muted)');fr.setAttribute('stroke-dasharray','6 6');fr.setAttribute('pointer-events','none');
+svg.prepend(fr);
+const sorted=[...M.provinces].sort((a,b)=>a.name.localeCompare(b.name,'es'));
+sorted.forEach(p=>{const b=document.createElement('button');b.className='chip';b.dataset.id=p.id;b.textContent=p.name;b.setAttribute('aria-pressed','false');b.onclick=()=>toggle(p.id);$('#chips').appendChild(b)});
+function toggle(id){if(state.visited[id])delete state.visited[id];else state.visited[id]=true;save();paintMap()}
+function paintMap(){
+  $$('.prov').forEach(e=>e.classList.toggle('on',!!state.visited[e.dataset.id]));
+  $$('.chip').forEach(e=>{const on=!!state.visited[e.dataset.id];e.classList.toggle('on',on);e.setAttribute('aria-pressed',on)});
+  const n=Object.keys(state.visited).length;$('#n').textContent=n;$('#bar').style.width=(n/52*100)+'%';
+}
+
+/* rankings */
+let draftCats=[];
+const avg=(it,cats)=>{const v=cats.map(c=>it.scores[c]).filter(x=>typeof x==='number');return v.length?v.reduce((a,b)=>a+b,0)/v.length:0};
+const fmt=n=>n.toFixed(1).replace('.',',');
+function renderTags(){
+  $('#rk-tags').innerHTML=draftCats.map((c,i)=>`<span class="tag">${esc(c)}<button type="button" data-i="${i}" aria-label="Quitar ${esc(c)}">×</button></span>`).join('');
+  $$('#rk-tags button').forEach(b=>b.onclick=()=>{draftCats.splice(+b.dataset.i,1);renderTags()});
+}
+let editingCats=false, editRankId=null;
+$('#new-rank').onclick=()=>{editingCats=false;draftCats=[];$('#rk-name').value='';renderTags();$('#rank-form').classList.remove('hidden');$('#rk-name').focus()};
+$('#rk-cancel').onclick=()=>$('#rank-form').classList.add('hidden');
+$('#rk-crit').onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();const v=e.target.value.trim();if(v&&!draftCats.includes(v))draftCats.push(v);e.target.value='';renderTags()}};
+$('#rank-form').onsubmit=e=>{
+  e.preventDefault();
+  const pending=$('#rk-crit').value.trim();if(pending&&!draftCats.includes(pending))draftCats.push(pending);$('#rk-crit').value='';
+  if(!draftCats.length){alert('Añade al menos una categoría de puntuación.');return}
+  if(editingCats){const r=state.rankings.find(x=>x.id===editRankId);r.name=$('#rk-name').value.trim();r.criteria=[...draftCats];$('#rank-form').classList.add('hidden');save();openRank(r.id);return}
+  const r={id:uid(),name:$('#rk-name').value.trim(),criteria:[...draftCats],items:[]};
+  state.rankings.push(r);save();$('#rank-form').classList.add('hidden');renderRankList();
+};
+function renderRankList(){
+  const box=$('#rank-cards');
+  box.innerHTML=state.rankings.length?'':'<p class="muted">Aún no hay rankings. Crea el primero, por ejemplo “Hoteles”.</p>';
+  state.rankings.forEach(r=>{
+    const b=document.createElement('button');b.className='card';
+    b.innerHTML=`<h3>${esc(r.name)}</h3><div class="muted">${r.items.length} elementos</div><div class="muted">${r.criteria.map(esc).join(', ')}</div>`;
+    b.onclick=()=>openRank(r.id);box.appendChild(b);
+  });
+}
+const cur=()=>state.rankings.find(r=>r.id===currentRank);
+function openRank(id){currentRank=id;resetForm();renderDetail();show();window.scrollTo(0,0)}
+$('#back').onclick=()=>{currentRank=null;$('#rank-form').classList.add('hidden');renderRankList();show()};
+$('#del-rank').onclick=()=>{if(confirm('¿Borrar este ranking con todos sus elementos?')){state.rankings=state.rankings.filter(r=>r.id!==currentRank);save();$('#back').onclick()}};
+$('#edit-cats').onclick=()=>{
+  const r=cur();editingCats=true;editRankId=r.id;draftCats=[...r.criteria];$('#rk-name').value=r.name;renderTags();
+  $('#back').onclick();$('#rank-form').classList.remove('hidden');
+};
+
+let editId=null, photoData=null;
+function resetForm(){
+  editId=null;photoData=null;$('#item-form').reset();$('#it-prev').classList.add('hidden');
+  $('#if-title').textContent='Añadir elemento';$('#if-save').textContent='Añadir';$('#if-cancel').classList.add('hidden');
+  const r=cur();if(!r)return;
+  $('#it-scores').innerHTML=r.criteria.map((c,i)=>`<div class="crit"><label for="sc${i}" style="margin:0">${esc(c)}</label><input type="range" id="sc${i}" data-c="${esc(c)}" min="0" max="10" step="0.5" value="5"><output id="o${i}">5</output></div>`).join('');
+  $$('#it-scores input').forEach((s,i)=>s.oninput=()=>$('#o'+i).textContent=s.value.replace('.',','));
+}
+$('#if-cancel').onclick=resetForm;
+function resize(file){return new Promise(res=>{
+  const img=new Image(),u=URL.createObjectURL(file);
+  img.onload=()=>{const k=Math.min(1,800/Math.max(img.width,img.height)),c=document.createElement('canvas');c.width=img.width*k;c.height=img.height*k;c.getContext('2d').drawImage(img,0,0,c.width,c.height);URL.revokeObjectURL(u);res(c.toDataURL('image/jpeg',.72))};
+  img.src=u})}
+$('#it-photo').onchange=async e=>{const f=e.target.files[0];if(!f)return;photoData=await resize(f);$('#it-prev').src=photoData;$('#it-prev').classList.remove('hidden')};
+$('#item-form').onsubmit=e=>{
+  e.preventDefault();const r=cur(),scores={};
+  $$('#it-scores input').forEach(s=>scores[s.dataset.c]=parseFloat(s.value));
+  const data={name:$('#it-name').value.trim(),notes:$('#it-notes').value.trim(),scores};
+  if(editId){const it=r.items.find(x=>x.id===editId);Object.assign(it,data);if(photoData)it.photo=photoData}
+  else r.items.push({id:uid(),photo:photoData||null,...data});
+  save();resetForm();renderDetail();
+};
+function renderDetail(){
+  const r=cur();if(!r)return;
+  $('#rd-title').textContent=r.name;
+  const sel=$('#sort'),prev=sel.value;
+  sel.innerHTML=`<option value="__g">Nota global</option>`+r.criteria.map(c=>`<option value="${esc(c)}">${esc(c)}</option>`).join('');
+  sel.value=[...sel.options].some(o=>o.value===prev)?prev:'__g';
+  const key=sel.value,score=it=>key==='__g'?avg(it,r.criteria):(it.scores[key]??0);
+  const list=[...r.items].sort((a,b)=>score(b)-score(a));
+  $('#count-items').textContent=list.length+' elementos';
+  $('#items').innerHTML=list.length?'':'<p class="muted">Todavía no hay elementos. Añade el primero arriba.</p>';
+  list.forEach((it,i)=>{
+    const d=document.createElement('div');d.className='item';
+    d.innerHTML=`${it.photo?`<img src="${it.photo}" alt="${esc(it.name)}">`:'<div class="ph"></div>'}
+      <div><h3>${i+1}. ${esc(it.name)}</h3>
+      <div class="mini">${r.criteria.map(c=>`<span>${esc(c)} <b>${it.scores[c]!==undefined?fmt(it.scores[c]):'–'}</b></span>`).join('')}</div>
+      ${it.notes?`<div class="muted" style="margin-top:6px">${esc(it.notes)}</div>`:''}
+      <div style="margin-top:8px"><button class="btn ghost small" data-e="${it.id}">Editar</button> <button class="btn ghost small" data-d="${it.id}">Borrar</button></div></div>
+      <div><div class="score">${fmt(score(it))}</div><div class="muted" style="text-align:right">${key==='__g'?'global':esc(key)}</div></div>`;
+    $('#items').appendChild(d);
+  });
+  $$('[data-d]').forEach(b=>b.onclick=()=>{if(confirm('¿Borrar este elemento?')){r.items=r.items.filter(x=>x.id!==b.dataset.d);save();renderDetail()}});
+  $$('[data-e]').forEach(b=>b.onclick=()=>{
+    const it=r.items.find(x=>x.id===b.dataset.e);resetForm();editId=it.id;
+    $('#it-name').value=it.name;$('#it-notes').value=it.notes||'';
+    $$('#it-scores input').forEach((s,i)=>{const v=it.scores[s.dataset.c];if(v!==undefined){s.value=v;$('#o'+i).textContent=String(v).replace('.',',')}});
+    if(it.photo){$('#it-prev').src=it.photo;$('#it-prev').classList.remove('hidden')}
+    $('#if-title').textContent='Editar elemento';$('#if-save').textContent='Guardar cambios';$('#if-cancel').classList.remove('hidden');
+    $('#item-form').scrollIntoView({behavior:'smooth'});
+  });
+}
+$('#sort').onchange=renderDetail;
+
+/* copia de seguridad */
+$('#export').onclick=()=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(state)],{type:'application/json'}));a.download='nosotros-dos-copia.json';a.click()};
+$('#import').onchange=async e=>{
+  try{const s=JSON.parse(await e.target.files[0].text());if(!s.rankings||!s.visited)throw 0;
+    if(confirm('Esto reemplaza los datos de este navegador. ¿Continuar?')){state=s;save();currentRank=null;paintMap();renderRankList();show()}}
+  catch(err){alert('Ese archivo no es una copia válida.')}
+  e.target.value='';
+};
+
+paintMap();renderRankList();show();
+</script>
+</body>
+</html>
