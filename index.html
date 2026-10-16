@@ -3,75 +3,90 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>COMPAS</title>
+<title>Nosotros dos</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{--ink:#14263B;--muted:#5C6F82;--sea:#D9E6EC;--paper:#F7F9FA;--card:#fff;--line:#C9D7DF;--berry:#D6336C;--berry-soft:#FBE3EC;--radius:10px}
-@media(prefers-color-scheme:dark){:root{--ink:#E8EEF3;--muted:#9DB0C0;--sea:#16293A;--paper:#0F1C29;--card:#172736;--line:#2C4156;--berry:#F0689A;--berry-soft:#3A2030}}
+:root{--ink:#1D2B4F;--muted:#5E6C8A;--card:#fff;--line:#D5E3F2;--pink:#FF5A7A;--sun:#FFD23F;--teal:#14B8A6;--radius:16px}
 *{box-sizing:border-box}
-body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.5 Figtree,system-ui,sans-serif}
-h1,h2,h3{font-family:'Bricolage Grotesque',Figtree,sans-serif;line-height:1.15;margin:0}
+body{margin:0;color:var(--ink);font:17px/1.65 Figtree,system-ui,sans-serif;background:linear-gradient(#EAF6FF,#FFF9E3) fixed}
+h1,h2,h3{font-family:'Bricolage Grotesque',Figtree,sans-serif;line-height:1.2;margin:0}
 button,input,select,textarea{font:inherit;color:inherit}
 button{cursor:pointer}
-:focus-visible{outline:3px solid var(--berry);outline-offset:2px}
-header{background:var(--sea);border-bottom:1px solid var(--line)}
-.wrap{max-width:1100px;margin:0 auto;padding:0 20px}
-.top{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:12px;padding-top:22px}
-.top h1{font-size:clamp(1.8rem,5vw,2.8rem);font-weight:800;letter-spacing:-.02em}
-.tabs{display:flex;gap:4px}
-.tab{background:none;border:0;border-bottom:3px solid transparent;padding:10px 14px;font-weight:600;color:var(--muted)}
-.tab[aria-selected=true]{color:var(--ink);border-color:var(--berry)}
-main{padding:28px 0 60px}
-.sub{display:flex;gap:8px;margin-bottom:22px}
-.pill{border:1px solid var(--line);background:var(--card);border-radius:99px;padding:6px 16px;font-weight:500}
-.pill[aria-selected=true]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
-.btn{background:var(--berry);color:#fff;border:0;border-radius:var(--radius);padding:9px 16px;font-weight:600}
-.btn.ghost{background:none;color:var(--ink);border:1px solid var(--line)}
-.btn.small{padding:5px 10px;font-size:.88rem}
+:focus-visible{outline:3px solid var(--pink);outline-offset:2px}
+.wrap{max-width:1100px;margin:0 auto;padding:0 24px}
+header{background:var(--sun);padding:30px 0 22px;border-radius:0 0 28px 28px;box-shadow:0 6px 20px rgba(255,180,0,.25)}
+.top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:18px}
+.top h1{font-size:clamp(2rem,6vw,3rem);font-weight:800;letter-spacing:-.02em}
+.tabs{display:flex;flex-wrap:wrap;gap:10px}
+.tab{background:rgba(255,255,255,.6);border:0;border-radius:99px;padding:10px 20px;font-weight:600}
+.tab[aria-selected=true]{background:var(--ink);color:var(--sun)}
+main{padding:44px 0 90px}
+.sub{display:flex;gap:10px;margin-bottom:28px}
+.pill{border:2px solid var(--ink);background:#fff;border-radius:99px;padding:8px 20px;font-weight:600}
+.pill[aria-selected=true]{background:var(--pink);border-color:var(--pink);color:#fff}
+.btn{background:var(--pink);color:#fff;border:0;border-radius:99px;padding:11px 22px;font-weight:600}
+.btn.ghost{background:#fff;color:var(--ink);border:2px solid var(--line)}
+.btn.small{padding:6px 14px;font-size:.9rem}
 .hidden{display:none!important}
-/* map */
-.mapgrid{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(260px,1fr);gap:28px;align-items:start}
-@media(max-width:800px){.mapgrid{grid-template-columns:1fr}}
-.mapbox{background:var(--sea);border-radius:var(--radius);padding:12px}
+.muted{color:var(--muted);font-size:.95rem}
+.scene{border-radius:26px;overflow:hidden;box-shadow:0 12px 34px rgba(29,43,79,.14);background:#fff}
+.banner{position:relative;height:230px}
+.banner svg{position:absolute;inset:0;width:100%;height:100%}
+.ttl{position:relative;padding:36px 36px}
+.ttl h2{font-size:clamp(2rem,5vw,2.8rem);font-weight:800}
+.ttl p{margin:6px 0 0}
+.night .ttl{color:#fff}
+.inner{padding:36px}
+#s-nacional .inner{background:linear-gradient(#FFF8DC,#fff)}
+.stats{display:flex;flex-wrap:wrap;align-items:center;gap:20px 36px;margin-bottom:28px}
+.big{font-family:'Bricolage Grotesque';font-size:2.6rem;font-weight:800;line-height:1;color:var(--pink)}
+.barw{flex:1;min-width:160px}
+.bar{height:12px;background:#E3ECF5;border-radius:9px;overflow:hidden}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--teal),var(--pink));width:0;transition:width .4s}
+.mapbox{background:#CDEBFB;border-radius:22px;padding:24px;max-width:820px;margin:0 auto}
 #map{width:100%;height:auto;display:block}
-.prov{fill:var(--card);stroke:var(--muted);stroke-width:1.4;stroke-linejoin:round;cursor:pointer;transition:fill .15s}
-.prov:hover{fill:var(--berry-soft)}
-.prov.on{fill:var(--berry)}
-.prov.on:hover{opacity:.85}
-.count{font-family:'Bricolage Grotesque';font-size:2.4rem;font-weight:800}
-.bar{height:8px;background:var(--line);border-radius:9px;overflow:hidden;margin:8px 0 18px}
-.bar i{display:block;height:100%;background:var(--berry);width:0;transition:width .3s}
-.chips{display:flex;flex-wrap:wrap;gap:6px;max-height:380px;overflow:auto}
-.chip{border:1px solid var(--line);background:var(--card);border-radius:99px;padding:3px 11px;font-size:.88rem}
-.chip.on{background:var(--berry);border-color:var(--berry);color:#fff}
-.soon{border:2px dashed var(--line);border-radius:var(--radius);padding:50px 20px;text-align:center;color:var(--muted)}
-/* rankings */
-.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-bottom:18px}
-.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;text-align:left}
-button.card:hover{border-color:var(--berry)}
-.card h3{font-size:1.15rem;margin-bottom:4px}
-.muted{color:var(--muted);font-size:.92rem}
-.panel{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px;margin-bottom:22px}
-label{display:block;font-weight:600;font-size:.92rem;margin-bottom:4px}
-input[type=text],select,textarea{width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:8px;background:var(--paper)}
-.field{margin-bottom:14px}
-.crit{display:grid;grid-template-columns:110px 1fr 44px;gap:10px;align-items:center;margin-bottom:6px}
-.crit input{accent-color:var(--berry)}
-.crit output{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
-.items{display:grid;gap:14px}
-.item{display:grid;grid-template-columns:120px 1fr auto;gap:16px;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:12px;align-items:center}
-.item img,.ph{width:120px;height:90px;object-fit:cover;border-radius:8px;background:var(--sea)}
-.score{font-family:'Bricolage Grotesque';font-size:2rem;font-weight:800;color:var(--berry);text-align:right;line-height:1}
-.mini{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:.88rem;color:var(--muted);margin-top:4px}
+.prov{fill:color-mix(in srgb,var(--c) 28%,#fff);stroke:#fff;stroke-width:1.6;stroke-linejoin:round;cursor:pointer;transition:fill .2s}
+.prov:hover{fill:color-mix(in srgb,var(--c) 60%,#fff)}
+.prov.on{fill:var(--c)}
+.prov.tiny{stroke:var(--c);stroke-width:8}
+#msg{text-align:center;margin:18px 0 0;min-height:1.7em}
+.pop{position:fixed;pointer-events:none;font-size:22px;z-index:50;animation:pop .9s ease-out forwards}
+@keyframes pop{to{transform:translate(var(--dx),var(--dy)) scale(1.3);opacity:0}}
+@media(prefers-reduced-motion:reduce){.pop{display:none}}
+#s-internacional .inner{background:linear-gradient(#12356B,#0B2447)}
+.board{background:#0A1226;border-radius:18px;padding:26px;color:#FFC933;font-family:'Bricolage Grotesque',sans-serif;letter-spacing:.05em}
+.board h3{font-size:1.4rem;margin-bottom:12px;text-transform:uppercase}
+.brow{display:grid;grid-template-columns:1.4fr 1fr auto auto;gap:16px;padding:14px 4px;border-bottom:1px solid #1E2A4A;align-items:center}
+.ok{color:#5CF2A5;font-size:.85rem}
+.x{background:none;border:0;color:#8A97B8;font-size:1.3rem}
+.bform{display:flex;flex-wrap:wrap;gap:12px;margin-top:22px}
+.bform input{flex:1;min-width:150px;padding:10px 14px;border-radius:10px;border:1px solid #2A3A66;background:#111C3A;color:#fff}
+.row{display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between;margin-bottom:26px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:22px}
+.card{background:var(--card);border:0;border-top:7px solid var(--a,var(--pink));border-radius:var(--radius);padding:24px;text-align:left;box-shadow:0 6px 18px rgba(29,43,79,.1);transition:transform .15s}
+button.card:hover{transform:translateY(-4px)}
+.card h3{font-size:1.25rem;margin-bottom:8px}
+.panel{background:var(--card);border-radius:var(--radius);padding:28px;margin-bottom:30px;box-shadow:0 6px 18px rgba(29,43,79,.1)}
+label{display:block;font-weight:600;font-size:.95rem;margin-bottom:6px}
+input[type=text],select,textarea{width:100%;padding:11px 14px;border:2px solid var(--line);border-radius:12px;background:#F8FBFF}
+.field{margin-bottom:22px}
+.crit{display:grid;grid-template-columns:120px 1fr 44px;gap:14px;align-items:center;margin-bottom:12px}
+.crit input{accent-color:var(--pink)}
+.crit output{text-align:right;font-weight:600}
+.items{display:grid;gap:22px}
+.item{display:grid;grid-template-columns:130px 1fr auto;gap:22px;background:var(--card);border-radius:var(--radius);padding:18px;align-items:center;box-shadow:0 6px 18px rgba(29,43,79,.1)}
+.item img,.ph{width:130px;height:100px;object-fit:cover;border-radius:12px;background:#DCEBF7}
+.item h3{margin-bottom:8px}
+.score{font-family:'Bricolage Grotesque';font-size:2.3rem;font-weight:800;color:var(--pink);text-align:right;line-height:1}
+.mini{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:.92rem;color:var(--muted)}
 .mini b{color:var(--ink)}
-@media(max-width:560px){.item{grid-template-columns:90px 1fr}.item img,.ph{width:90px;height:70px}.score{grid-column:1/-1;text-align:left}.crit{grid-template-columns:80px 1fr 40px}}
-.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
-.tag{background:var(--berry-soft);border-radius:99px;padding:2px 10px;font-size:.88rem}
+@media(max-width:560px){.inner{padding:20px}.item{grid-template-columns:90px 1fr}.item img,.ph{width:90px;height:70px}.score{grid-column:1/-1;text-align:left}.crit{grid-template-columns:80px 1fr 40px}.brow{grid-template-columns:1fr auto}.ttl{padding:26px 22px}}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 22px}
+.tag{background:#FFE3EA;border-radius:99px;padding:3px 12px;font-size:.92rem}
 .tag button{background:none;border:0;padding:0 0 0 6px}
-footer{border-top:1px solid var(--line);padding:18px 0;color:var(--muted);font-size:.9rem}
+footer{padding:24px 0 40px;color:var(--muted);font-size:.92rem}
 </style>
 </head>
 <body>
@@ -79,8 +94,8 @@ footer{border-top:1px solid var(--line);padding:18px 0;color:var(--muted);font-s
   <div class="top">
     <h1>Nosotros dos</h1>
     <nav class="tabs" role="tablist">
-      <button class="tab" role="tab" data-view="trotamundos">Trotamundos</button>
-      <button class="tab" role="tab" data-view="rankings">Rankings</button>
+      <button class="tab" role="tab" data-view="trotamundos">🧭 Trotamundos</button>
+      <button class="tab" role="tab" data-view="rankings">🏆 Rankings</button>
     </nav>
   </div>
 </div></header>
@@ -92,19 +107,47 @@ footer{border-top:1px solid var(--line);padding:18px 0;color:var(--muted);font-s
       <button class="pill" role="tab" data-sub="nacional">Nacional</button>
       <button class="pill" role="tab" data-sub="internacional">Internacional</button>
     </div>
-    <div id="s-nacional" class="mapgrid">
-      <div class="mapbox"><svg id="map" role="group" aria-label="Mapa de provincias de España"></svg></div>
-      <div>
-        <div class="count"><span id="n">0</span> de 52</div>
-        <div class="muted">provincias visitadas</div>
-        <div class="bar"><i id="bar"></i></div>
-        <p class="muted" style="margin-top:0">Toca una provincia en el mapa o en la lista para marcarla.</p>
-        <div class="chips" id="chips"></div>
+    <div id="s-nacional" class="scene">
+      <div class="banner">
+        <svg viewBox="0 0 1200 230" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+          <rect width="1200" height="230" fill="#BFE8FF"/><circle cx="1040" cy="60" r="38" fill="#FFE27A"/>
+          <ellipse cx="620" cy="50" rx="80" ry="20" fill="#fff" opacity=".85"/><ellipse cx="690" cy="38" rx="50" ry="16" fill="#fff" opacity=".85"/>
+          <path d="M0 150 Q200 80 420 140 T820 120 T1200 100 V230 H0Z" fill="#A5DB6B"/>
+          <path d="M0 185 Q260 120 560 175 T1200 150 V230 H0Z" fill="#6EC24B"/>
+          <path d="M0 215 Q300 175 640 210 T1200 195 V230 H0Z" fill="#3FA34D"/>
+          <path id="rd" d="M900 232 C820 205 990 185 880 165 S810 140 850 120" fill="none" stroke="#59606B" stroke-width="30" stroke-linecap="round"/>
+          <path d="M900 232 C820 205 990 185 880 165 S810 140 850 120" fill="none" stroke="#fff" stroke-width="3" stroke-dasharray="12 14"/>
+          <circle cx="560" cy="170" r="14" fill="#2E8B45"/><rect x="557" y="178" width="6" height="14" fill="#7A5230"/><circle cx="600" cy="176" r="10" fill="#2E8B45"/><rect x="598" y="182" width="4" height="10" fill="#7A5230"/>
+        </svg>
+        <div class="ttl"><h2>Por España</h2><p>Provincias que hemos pisado juntos</p></div>
+      </div>
+      <div class="inner">
+        <div class="stats">
+          <div><span class="big"><span id="n">0</span>/52</span><div class="muted">provincias</div></div>
+          <div class="barw"><div class="bar"><i id="bar"></i></div></div>
+          <div><span class="big" id="full">0</span><div class="muted">comunidades completas</div></div>
+        </div>
+        <div class="mapbox"><svg id="map" role="group" aria-label="Mapa de provincias de España"></svg></div>
+        <p id="msg" class="muted" aria-live="polite">Toca una provincia para marcarla como visitada.</p>
       </div>
     </div>
-    <div id="s-internacional" class="soon hidden">
-      <h2>Internacional</h2>
-      <p>Aquí irán los países que visitemos. Todavía por decidir cómo.</p>
+    <div id="s-internacional" class="scene hidden">
+      <div class="banner night">
+        <svg viewBox="0 0 1200 230" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+          <rect width="1200" height="230" fill="#0B2447"/>
+          <g fill="#fff" opacity=".8"><circle cx="120" cy="40" r="2"/><circle cx="300" cy="90" r="2"/><circle cx="520" cy="30" r="2"/><circle cx="760" cy="70" r="2"/><circle cx="980" cy="35" r="2"/><circle cx="1120" cy="95" r="2"/></g>
+          <path d="M850 230 L910 110 L1010 110 L1090 230Z" fill="#2B2F3A"/>
+          <path d="M960 230 L960 110" stroke="#fff" stroke-width="4" stroke-dasharray="14 12"/>
+          <g fill="#FFC933"><circle cx="880" cy="170" r="4"/><circle cx="905" cy="120" r="3"/><circle cx="1050" cy="170" r="4"/><circle cx="1012" cy="120" r="3"/></g>
+          <text x="640" y="110" font-size="60" transform="rotate(-18 640 110)">✈️</text>
+        </svg>
+        <div class="ttl"><h2>Internacional</h2><p>Próximas salidas y destinos ya visitados</p></div>
+      </div>
+      <div class="inner">
+        <div class="board"><h3>Salidas</h3><div id="brows"></div>
+          <form id="board-form" class="bform"><input id="bd-name" type="text" placeholder="País o ciudad" aria-label="Destino" required><input id="bd-note" type="text" placeholder="Cuándo o una nota" aria-label="Nota"><button class="btn" type="submit">Añadir destino</button></form>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -159,6 +202,7 @@ footer{border-top:1px solid var(--line);padding:18px 0;color:var(--muted);font-s
 const KEY='nosotros-dos-v1';
 let state={visited:{},rankings:[]};
 try{const s=JSON.parse(localStorage.getItem(KEY));if(s&&s.rankings)state=s}catch(e){}
+state.countries=state.countries||[];
 function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){alert('No hay espacio para guardar. Prueba con fotos más pequeñas o exporta una copia.')}}
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const uid=()=>Math.random().toString(36).slice(2,10);
@@ -184,10 +228,10 @@ const M=window.SPAIN_MAP, NS='http://www.w3.org/2000/svg', svg=$('#map');
 svg.setAttribute('viewBox',`0 0 ${M.w} ${M.h}`);
 M.provinces.forEach(p=>{
   const el=document.createElementNS(NS,'path');
-  el.setAttribute('d',p.d);el.setAttribute('class','prov');el.dataset.id=p.id;
+  el.setAttribute('d',p.d);el.setAttribute('class','prov'+(['51','52'].includes(p.id)?' tiny':''));el.dataset.id=p.id;el.style.setProperty('--c',M.ccaa[p.c].k);el.onmouseenter=()=>$('#msg').textContent=p.name+' · '+M.ccaa[p.c].n;
   el.setAttribute('tabindex','0');el.setAttribute('role','button');el.setAttribute('aria-label',p.name);
   const t=document.createElementNS(NS,'title');t.textContent=p.name;el.appendChild(t);
-  el.onclick=()=>toggle(p.id);
+  el.onclick=e=>toggle(p.id,e);
   el.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();toggle(p.id)}};
   svg.appendChild(el);
 });
@@ -195,14 +239,25 @@ const fr=document.createElementNS(NS,'rect');
 [['x',0],['y',1],['width',2],['height',3]].forEach(([k,i])=>fr.setAttribute(k,M.frame[i]));
 fr.setAttribute('fill','none');fr.setAttribute('stroke','var(--muted)');fr.setAttribute('stroke-dasharray','6 6');fr.setAttribute('pointer-events','none');
 svg.prepend(fr);
-const sorted=[...M.provinces].sort((a,b)=>a.name.localeCompare(b.name,'es'));
-sorted.forEach(p=>{const b=document.createElement('button');b.className='chip';b.dataset.id=p.id;b.textContent=p.name;b.setAttribute('aria-pressed','false');b.onclick=()=>toggle(p.id);$('#chips').appendChild(b)});
-function toggle(id){if(state.visited[id])delete state.visited[id];else state.visited[id]=true;save();paintMap()}
+const byName=Object.fromEntries(M.provinces.map(p=>[p.id,p]));
+function toggle(id,ev){
+  const on=!state.visited[id];if(on)state.visited[id]=true;else delete state.visited[id];
+  save();paintMap();const p=byName[id];$('#msg').textContent=p.name+' · '+M.ccaa[p.c].n+(on?' ✔ visitada':' (quitada)');
+  if(on&&ev&&ev.clientX&&!matchMedia('(prefers-reduced-motion:reduce)').matches)for(let i=0;i<10;i++){const e=document.createElement('span');e.className='pop';e.textContent=['🎉','✨','📍','💖'][i%4];e.style.left=ev.clientX+'px';e.style.top=ev.clientY+'px';e.style.setProperty('--dx',(Math.random()*160-80)+'px');e.style.setProperty('--dy',(Math.random()*-120-20)+'px');document.body.appendChild(e);setTimeout(()=>e.remove(),900)}
+}
 function paintMap(){
   $$('.prov').forEach(e=>e.classList.toggle('on',!!state.visited[e.dataset.id]));
-  $$('.chip').forEach(e=>{const on=!!state.visited[e.dataset.id];e.classList.toggle('on',on);e.setAttribute('aria-pressed',on)});
   const n=Object.keys(state.visited).length;$('#n').textContent=n;$('#bar').style.width=(n/52*100)+'%';
+  const tot={},got={};M.provinces.forEach(p=>{tot[p.c]=(tot[p.c]||0)+1;if(state.visited[p.id])got[p.c]=(got[p.c]||0)+1});
+  $('#full').textContent=Object.keys(tot).filter(c=>got[c]===tot[c]).length;
 }
+function renderBoard(){
+  const b=$('#brows');b.innerHTML=state.countries.length?'':'<div class="brow"><span>Sin destinos todavía</span></div>';
+  state.countries.forEach(c=>{const r=document.createElement('div');r.className='brow';
+    r.innerHTML=`<span>✈ ${esc(c.name)}</span><span>${esc(c.note||'')}</span><span class="ok">EMBARCADO</span><button class="x" aria-label="Quitar ${esc(c.name)}">×</button>`;
+    r.querySelector('.x').onclick=()=>{state.countries=state.countries.filter(x=>x.id!==c.id);save();renderBoard()};b.appendChild(r)});
+}
+$('#board-form').onsubmit=e=>{e.preventDefault();const n=$('#bd-name').value.trim();if(!n)return;state.countries.push({id:uid(),name:n,note:$('#bd-note').value.trim()});save();e.target.reset();renderBoard()};
 
 /* rankings */
 let draftCats=[];
@@ -227,8 +282,8 @@ $('#rank-form').onsubmit=e=>{
 function renderRankList(){
   const box=$('#rank-cards');
   box.innerHTML=state.rankings.length?'':'<p class="muted">Aún no hay rankings. Crea el primero, por ejemplo “Hoteles”.</p>';
-  state.rankings.forEach(r=>{
-    const b=document.createElement('button');b.className='card';
+  state.rankings.forEach((r,i)=>{
+    const b=document.createElement('button');b.className='card';b.style.setProperty('--a',['#FF5A7A','#14B8A6','#FFB703','#6C63FF','#3A86FF'][i%5]);
     b.innerHTML=`<h3>${esc(r.name)}</h3><div class="muted">${r.items.length} elementos</div><div class="muted">${r.criteria.map(esc).join(', ')}</div>`;
     b.onclick=()=>openRank(r.id);box.appendChild(b);
   });
@@ -277,7 +332,7 @@ function renderDetail(){
   list.forEach((it,i)=>{
     const d=document.createElement('div');d.className='item';
     d.innerHTML=`${it.photo?`<img src="${it.photo}" alt="${esc(it.name)}">`:'<div class="ph"></div>'}
-      <div><h3>${i+1}. ${esc(it.name)}</h3>
+      <div><h3>${['🥇','🥈','🥉'][i]||(i+1)+'.'} ${esc(it.name)}</h3>
       <div class="mini">${r.criteria.map(c=>`<span>${esc(c)} <b>${it.scores[c]!==undefined?fmt(it.scores[c]):'–'}</b></span>`).join('')}</div>
       ${it.notes?`<div class="muted" style="margin-top:6px">${esc(it.notes)}</div>`:''}
       <div style="margin-top:8px"><button class="btn ghost small" data-e="${it.id}">Editar</button> <button class="btn ghost small" data-d="${it.id}">Borrar</button></div></div>
@@ -300,12 +355,12 @@ $('#sort').onchange=renderDetail;
 $('#export').onclick=()=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(state)],{type:'application/json'}));a.download='nosotros-dos-copia.json';a.click()};
 $('#import').onchange=async e=>{
   try{const s=JSON.parse(await e.target.files[0].text());if(!s.rankings||!s.visited)throw 0;
-    if(confirm('Esto reemplaza los datos de este navegador. ¿Continuar?')){state=s;save();currentRank=null;paintMap();renderRankList();show()}}
+    if(confirm('Esto reemplaza los datos de este navegador. ¿Continuar?')){state=s;state.countries=s.countries||[];save();currentRank=null;paintMap();renderRankList();renderBoard();show()}}
   catch(err){alert('Ese archivo no es una copia válida.')}
   e.target.value='';
 };
 
-paintMap();renderRankList();show();
+paintMap();renderRankList();renderBoard();show();
 </script>
 </body>
 </html>
