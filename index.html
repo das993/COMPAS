@@ -86,6 +86,12 @@ input[type=text],select,textarea{width:100%;padding:11px 14px;border:2px solid v
 .tags{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 22px}
 .tag{background:#FFE3EA;border-radius:99px;padding:3px 12px;font-size:.92rem}
 .tag button{background:none;border:0;padding:0 0 0 6px}
+.filters{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:16px;margin-bottom:22px}
+.pick{background:linear-gradient(135deg,#FFB703,#FF5A7A);color:#fff;border-radius:var(--radius);padding:30px;margin-bottom:30px;text-align:center;animation:pk .4s}
+@keyframes pk{from{transform:scale(.92);opacity:0}}
+.pick h3{font-size:2.2rem;margin:6px 0}
+.badge{display:inline-block;background:#DDF5F1;color:#0B7A6E;border-radius:99px;padding:1px 12px;font-size:.85rem;margin:0 6px 4px 0}
+.badge.want{background:#FFF1C9;color:#8A6100}
 footer{padding:24px 0 40px;color:var(--muted);font-size:.92rem}
 </style>
 </head>
@@ -96,6 +102,7 @@ footer{padding:24px 0 40px;color:var(--muted);font-size:.92rem}
     <nav class="tabs" role="tablist">
       <button class="tab" role="tab" data-view="trotamundos">🧭 Trotamundos</button>
       <button class="tab" role="tab" data-view="rankings">🏆 Rankings</button>
+      <button class="tab" role="tab" data-view="foodies">🍽️ Foodies</button>
     </nav>
   </div>
 </div></header>
@@ -189,6 +196,45 @@ footer{padding:24px 0 40px;color:var(--muted);font-size:.92rem}
       <div class="items" id="items"></div>
     </div>
   </section>
+  <!-- FOODIES -->
+  <section id="v-foodies" class="hidden">
+    <div class="row"><h2>🍽️ Foodies</h2><button class="btn" id="fd-new">Añadir restaurante</button></div>
+    <form id="fd-form" class="panel hidden">
+      <h3 id="fd-title" style="margin-bottom:20px">Añadir restaurante</h3>
+      <div class="field"><label for="fd-name">Nombre</label><input type="text" id="fd-name" required></div>
+      <div class="filters">
+        <div><label for="fd-city">Ciudad</label><input type="text" id="fd-city" list="dl-city"></div>
+        <div><label for="fd-cuisine">Estilo de comida</label><input type="text" id="fd-cuisine" list="dl-cuisine" placeholder="Italiano, tapas, sushi…"></div>
+        <div><label for="fd-status">Estado</label><select id="fd-status"><option value="done">Ya hemos ido</option><option value="want">Queremos ir</option></select></div>
+      </div>
+      <datalist id="dl-city"></datalist><datalist id="dl-cuisine"></datalist>
+      <div class="field"><label for="fd-photo">Foto</label><input type="file" id="fd-photo" accept="image/*"><img id="fd-prev" class="hidden" alt="Vista previa" style="max-width:160px;margin-top:8px;border-radius:8px"></div>
+      <div id="fd-scores">
+        <div class="crit"><label for="fs-food" style="margin:0">Comida</label><input type="range" id="fs-food" min="0" max="10" step="0.5" value="7"><output>7</output></div>
+        <div class="crit"><label for="fs-amb" style="margin:0">Ambiente</label><input type="range" id="fs-amb" min="0" max="10" step="0.5" value="7"><output>7</output></div>
+        <div class="crit"><label for="fs-price" style="margin:0">Precio</label><input type="range" id="fs-price" min="0" max="10" step="0.5" value="7"><output>7</output></div>
+        <p class="muted" style="margin:0 0 20px">En precio, 10 significa muy buena relación calidad-precio.</p>
+      </div>
+      <div class="field"><label for="fd-notes">Comentario (qué pedir, qué evitar…)</label><textarea id="fd-notes" rows="2"></textarea></div>
+      <button class="btn" type="submit">Guardar</button> <button class="btn ghost" type="button" id="fd-cancel">Cancelar</button>
+    </form>
+    <div class="panel">
+      <h3 style="margin-bottom:18px">¿Dónde comemos hoy?</h3>
+      <div class="filters">
+        <input type="text" class="flt" id="fl-q" data-d="" placeholder="Buscar por nombre, comentario…" aria-label="Buscar">
+        <select class="flt" id="fl-city" data-d="" aria-label="Ciudad"></select>
+        <select class="flt" id="fl-cuisine" data-d="" aria-label="Estilo"></select>
+        <select class="flt" id="fl-status" data-d="all" aria-label="Estado"><option value="all">Todos los sitios</option><option value="done">Ya hemos ido</option><option value="want">Queremos ir</option></select>
+        <select class="flt" id="fl-food" data-d="0" aria-label="Comida mínima"></select>
+        <select class="flt" id="fl-amb" data-d="0" aria-label="Ambiente mínimo"></select>
+        <select class="flt" id="fl-price" data-d="0" aria-label="Precio mínimo"></select>
+      </div>
+      <button class="btn" id="fd-random">🎲 Sorprendernos</button> <button class="btn ghost" id="fl-clear">Limpiar filtros</button>
+    </div>
+    <div id="pick" class="hidden" aria-live="polite"></div>
+    <div class="row"><span class="muted" id="fd-count"></span></div>
+    <div class="items" id="fd-items"></div>
+  </section>
 </main>
 
 <footer><div class="wrap">
@@ -202,7 +248,7 @@ footer{padding:24px 0 40px;color:var(--muted);font-size:.92rem}
 const KEY='nosotros-dos-v1';
 let state={visited:{},rankings:[]};
 try{const s=JSON.parse(localStorage.getItem(KEY));if(s&&s.rankings)state=s}catch(e){}
-state.countries=state.countries||[];
+state.countries=state.countries||[];state.foods=state.foods||[];
 function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){alert('No hay espacio para guardar. Prueba con fotos más pequeñas o exporta una copia.')}}
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const uid=()=>Math.random().toString(36).slice(2,10);
@@ -215,6 +261,7 @@ function show(){
   $$('.pill').forEach(b=>b.setAttribute('aria-selected',b.dataset.sub===sub));
   $('#v-trotamundos').classList.toggle('hidden',view!=='trotamundos');
   $('#v-rankings').classList.toggle('hidden',view!=='rankings');
+  $('#v-foodies').classList.toggle('hidden',view!=='foodies');
   $('#s-nacional').classList.toggle('hidden',sub!=='nacional');
   $('#s-internacional').classList.toggle('hidden',sub!=='internacional');
   $('#r-list').classList.toggle('hidden',!!currentRank);
@@ -351,16 +398,76 @@ function renderDetail(){
 }
 $('#sort').onchange=renderDetail;
 
+/* foodies */
+let foodEdit=null,foodPhoto=null;
+const FS=['food','amb','price'];
+const foodAvg=f=>(f.food+f.amb+f.price)/3;
+[['food','Comida'],['amb','Ambiente'],['price','Precio']].forEach(([k,l])=>$('#fl-'+k).innerHTML=`<option value="0">${l}: cualquiera</option>`+[6,7,8,9].map(n=>`<option value="${n}">${l} ${n}+</option>`).join(''));
+$$('#fd-scores input').forEach(i=>i.oninput=()=>i.nextElementSibling.textContent=i.value.replace('.',','));
+$('#fd-status').onchange=()=>$('#fd-scores').classList.toggle('hidden',$('#fd-status').value==='want');
+function resetFood(){foodEdit=null;foodPhoto=null;$('#fd-form').reset();$('#fd-prev').classList.add('hidden');$('#fd-title').textContent='Añadir restaurante';$('#fd-scores').classList.remove('hidden');$$('#fd-scores output').forEach(o=>o.textContent='7')}
+$('#fd-new').onclick=()=>{resetFood();$('#fd-form').classList.remove('hidden');$('#fd-name').focus()};
+$('#fd-cancel').onclick=()=>{resetFood();$('#fd-form').classList.add('hidden')};
+$('#fd-photo').onchange=async e=>{const f=e.target.files[0];if(!f)return;foodPhoto=await resize(f);$('#fd-prev').src=foodPhoto;$('#fd-prev').classList.remove('hidden')};
+$('#fd-form').onsubmit=e=>{
+  e.preventDefault();
+  const d={name:$('#fd-name').value.trim(),city:$('#fd-city').value.trim(),cuisine:$('#fd-cuisine').value.trim(),want:$('#fd-status').value==='want',notes:$('#fd-notes').value.trim(),food:+$('#fs-food').value,amb:+$('#fs-amb').value,price:+$('#fs-price').value};
+  if(foodEdit){const f=state.foods.find(x=>x.id===foodEdit);Object.assign(f,d);if(foodPhoto)f.photo=foodPhoto}
+  else state.foods.push({id:uid(),photo:foodPhoto,...d});
+  save();resetFood();$('#fd-form').classList.add('hidden');renderFood();
+};
+function fillSel(id,vals,label){const el=$(id),v=el.value;el.innerHTML=`<option value="">${label}</option>`+[...new Set(vals.filter(Boolean))].sort((a,b)=>a.localeCompare(b,'es')).map(x=>`<option>${esc(x)}</option>`).join('');el.value=[...el.options].some(o=>o.value===v)?v:''}
+function fillList(id,vals){$(id).innerHTML=[...new Set(vals.filter(Boolean))].map(v=>`<option value="${esc(v)}">`).join('')}
+function foodsFiltered(){
+  const q=$('#fl-q').value.trim().toLowerCase(),c=$('#fl-city').value,k=$('#fl-cuisine').value,st=$('#fl-status').value,m={food:+$('#fl-food').value,amb:+$('#fl-amb').value,price:+$('#fl-price').value};
+  return state.foods.filter(f=>(!q||(f.name+' '+f.city+' '+f.cuisine+' '+(f.notes||'')).toLowerCase().includes(q))&&(!c||f.city===c)&&(!k||f.cuisine===k)&&(st==='all'||(st==='want')===f.want)&&(f.want?!(m.food||m.amb||m.price):FS.every(x=>f[x]>=m[x])));
+}
+function renderFood(){
+  fillSel('#fl-city',state.foods.map(f=>f.city),'Todas las ciudades');fillSel('#fl-cuisine',state.foods.map(f=>f.cuisine),'Todos los estilos');
+  fillList('#dl-city',state.foods.map(f=>f.city));fillList('#dl-cuisine',state.foods.map(f=>f.cuisine));
+  const list=foodsFiltered().sort((a,b)=>(a.want-b.want)||(b.want?0:foodAvg(b)-foodAvg(a)));
+  $('#fd-count').textContent=list.length+' de '+state.foods.length+' sitios';
+  const box=$('#fd-items');box.innerHTML=state.foods.length?(list.length?'':'<p class="muted">Ningún sitio cumple esos filtros.</p>'):'<p class="muted">Todavía no hay restaurantes. Añade el primero.</p>';
+  list.forEach(f=>{
+    const d=document.createElement('div');d.className='item';
+    d.innerHTML=`${f.photo?`<img src="${f.photo}" alt="${esc(f.name)}">`:'<div class="ph"></div>'}
+      <div><h3>${esc(f.name)}</h3><div>${f.city?`<span class="badge">${esc(f.city)}</span>`:''}${f.cuisine?`<span class="badge">${esc(f.cuisine)}</span>`:''}${f.want?'<span class="badge want">Queremos ir</span>':''}</div>
+      ${f.want?'':`<div class="mini" style="margin-top:8px"><span>Comida <b>${fmt(f.food)}</b></span><span>Ambiente <b>${fmt(f.amb)}</b></span><span>Precio <b>${fmt(f.price)}</b></span></div>`}
+      ${f.notes?`<div class="muted" style="margin-top:6px">${esc(f.notes)}</div>`:''}
+      <div style="margin-top:10px"><button class="btn ghost small" data-fe="${f.id}">Editar</button> <button class="btn ghost small" data-fd="${f.id}">Borrar</button></div></div>
+      <div>${f.want?'<div class="score">🍴</div>':`<div class="score">${fmt(foodAvg(f))}</div><div class="muted" style="text-align:right">global</div>`}</div>`;
+    box.appendChild(d);
+  });
+  $$('[data-fd]').forEach(b=>b.onclick=()=>{if(confirm('¿Borrar este restaurante?')){state.foods=state.foods.filter(x=>x.id!==b.dataset.fd);save();renderFood()}});
+  $$('[data-fe]').forEach(b=>b.onclick=()=>{
+    const f=state.foods.find(x=>x.id===b.dataset.fe);resetFood();foodEdit=f.id;
+    $('#fd-name').value=f.name;$('#fd-city').value=f.city||'';$('#fd-cuisine').value=f.cuisine||'';$('#fd-notes').value=f.notes||'';$('#fd-status').value=f.want?'want':'done';
+    $('#fd-scores').classList.toggle('hidden',f.want);
+    [['food','fs-food'],['amb','fs-amb'],['price','fs-price']].forEach(([k,id])=>{$('#'+id).value=f[k];$('#'+id).nextElementSibling.textContent=String(f[k]).replace('.',',')});
+    if(f.photo){$('#fd-prev').src=f.photo;$('#fd-prev').classList.remove('hidden')}
+    $('#fd-title').textContent='Editar restaurante';$('#fd-form').classList.remove('hidden');$('#fd-form').scrollIntoView({behavior:'smooth'});
+  });
+}
+$$('.flt').forEach(e=>e.oninput=renderFood);
+$('#fl-clear').onclick=()=>{$$('.flt').forEach(e=>e.value=e.dataset.d);renderFood()};
+$('#fd-random').onclick=()=>{
+  const l=foodsFiltered(),box=$('#pick');box.className='pick';
+  if(!l.length){box.innerHTML='<h3>Nada por aquí 🤷</h3><p>Ningún sitio cumple esos filtros.</p>';return}
+  const f=l[Math.floor(Math.random()*l.length)];
+  box.innerHTML=`<div>Hoy toca…</div><h3>${esc(f.name)}</h3><div>${esc([f.cuisine,f.city].filter(Boolean).join(' · '))}${f.want?'':' · '+fmt(foodAvg(f))+' de nota'}</div>`;
+  box.style.animation='none';void box.offsetWidth;box.style.animation='';
+};
+
 /* copia de seguridad */
 $('#export').onclick=()=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(state)],{type:'application/json'}));a.download='nosotros-dos-copia.json';a.click()};
 $('#import').onchange=async e=>{
   try{const s=JSON.parse(await e.target.files[0].text());if(!s.rankings||!s.visited)throw 0;
-    if(confirm('Esto reemplaza los datos de este navegador. ¿Continuar?')){state=s;state.countries=s.countries||[];save();currentRank=null;paintMap();renderRankList();renderBoard();show()}}
+    if(confirm('Esto reemplaza los datos de este navegador. ¿Continuar?')){state=s;state.countries=s.countries||[];state.foods=s.foods||[];save();currentRank=null;paintMap();renderRankList();renderBoard();renderFood();show()}}
   catch(err){alert('Ese archivo no es una copia válida.')}
   e.target.value='';
 };
 
-paintMap();renderRankList();renderBoard();show();
+paintMap();renderRankList();renderBoard();renderFood();show();
 </script>
 </body>
 </html>
